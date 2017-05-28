@@ -4,7 +4,11 @@ SVN="subversion"
 #P=`check_distro`
 #echo $P
 install_subversion(){
-    sudo $P -y install $SVN
+    if [[ ! -e  /bin/svn ]]
+    then
+     sudo $P -y install $SVN
+    fi
 }
+
 
 install_subversion
