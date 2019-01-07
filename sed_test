@@ -1,0 +1,12 @@
+oyj@Workstation-oyj-X555QG ~/work$cat test
+ddddd os_centos_6_max_threadx_count  tddj
+ddddd os_centos_6_max_threadx_count kdkdk
+ddddd os_centos_6_max_threadx_count  kkk
+ddddd os_centos_6_max_threadx_count   kkk
+ddddd os_centos_6_max_threadx_count mkkkkkkkkkkk kkkkkkkkkkkkkk
+oyj@Workstation-oyj-X555QG ~/work$sed 's/os_centos_6_\(.*\)*_\(\w*\)/test/g' test
+ddddd test  tddj
+ddddd test kdkdk
+ddddd test  kkk
+ddddd test   kkk
+ddddd test mkkkkkkkkkkk kkkkkkkkkkkkkk
