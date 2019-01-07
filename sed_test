@@ -10,3 +10,11 @@ ddddd test kdkdk
 ddddd test  kkk
 ddddd test   kkk
 ddddd test mkkkkkkkkkkk kkkkkkkkkkkkkk
+
+#\1pattern
+oyj@Workstation-oyj-X555QG ~/work$sed 's/os_centos_6_\(.*\)*_\(\w*\)/linux_os_centos6_\1/g' test
+ddddd linux_os_centos6_max_threadx  tddj
+ddddd linux_os_centos6_max_threadx kdkdk
+ddddd linux_os_centos6_max_threadx  kkk
+ddddd linux_os_centos6_max_threadx   kkk
+ddddd linux_os_centos6_max_threadx mkkkkkkkkkkk kkkkkkkkkkkkkk
