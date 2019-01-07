@@ -18,3 +18,17 @@ ddddd linux_os_centos6_max_threadx kdkdk
 ddddd linux_os_centos6_max_threadx  kkk
 ddddd linux_os_centos6_max_threadx   kkk
 ddddd linux_os_centos6_max_threadx mkkkkkkkkkkk kkkkkkkkkkkkkk
+
+#to uppercase
+oyj@Workstation-oyj-X555QG ~/work$sed 's/os_centos_6_\(.*\)*_\(\w*\)/\Ulinux_os_centos6_\1\2/g' test
+ddddd LINUX_OS_CENTOS6_MAX_THREADXCOUNT  tddj
+ddddd LINUX_OS_CENTOS6_MAX_THREADXCOUNT kdkdk
+ddddd LINUX_OS_CENTOS6_MAX_THREADXCOUNT  kkk
+ddddd LINUX_OS_CENTOS6_MAX_THREADXCOUNT   kkk
+ddddd LINUX_OS_CENTOS6_MAX_THREADXCOUNT mkkkkkkkkkkk kkkkkkkkkkkkkk
+oyj@Workstation-oyj-X555QG ~/work$sed 's/os_centos_6_\(.*\)*_\(\w*\)/\Ulinux_os_centos6_\1_\2/g' test
+ddddd LINUX_OS_CENTOS6_MAX_THREADX_COUNT  tddj
+ddddd LINUX_OS_CENTOS6_MAX_THREADX_COUNT kdkdk
+ddddd LINUX_OS_CENTOS6_MAX_THREADX_COUNT  kkk
+ddddd LINUX_OS_CENTOS6_MAX_THREADX_COUNT   kkk
+ddddd LINUX_OS_CENTOS6_MAX_THREADX_COUNT mkkkkkkkkkkk kkkkkkkkkkkkkk
