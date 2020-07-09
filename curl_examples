@@ -1,0 +1,15 @@
+#post
+oyj@controller:~/Desktop$ curl -H "Content-Type: application/json" -X POST -d '{"cid":6,"cname":"Korean1","cemail":"t@k.com"}' http://localhost:9990/customers/
+
+#del
+oyj@controller:~/Desktop$ curl -H "Content-Type: application/json" -X DELETE -d '{"cid":1}' http://localhost:9990/customers/
+#get
+oyj@controller:~/Desktop$ curl http://localhost:9990/customers/
+#updaet
+curl -H "Content-Type: application/json" -X PUT -d '{"cid":2,"cname":"UpdatedKorean1","cemail":"Updated@k.com"}' http://localhost:9990/customers/
+
+oyj@controller:~/Desktop$ curl http://localhost:9990/customers/2
+Optional[Customers [cid=2, cname=UpdatedKorean1, cemail=Updated@k.com]]oyj@controller:~/Desktop$ 
+
+oyj@controller:~/Desktop$ curl http://localhost:9990/customers/
+[{"cid":1,"cname":"KOREAN1","cemail":"TESTER1@K.CM"},{"cid":2,"cname":"UpdatedKorean1","cemail":"Updated@k.com"},{"cid":3,"cname":"KOREAN3","cemail":"TESTER3@K.CM"},{"cid":6,"cname":"Korean1","cemail":"t@k.com"}]
