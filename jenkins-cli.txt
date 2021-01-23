@@ -1,0 +1,2 @@
+oyj@controller:~/Downloads$ java -jar jenkins-cli.jar -auth admin:passwd -s http://localhost:8080/ install-plugin extensible-choice-parameter:1.7.0
+Installing extensible-choice-parameter:1.7.0 from update center
