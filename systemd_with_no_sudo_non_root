@@ -1,0 +1,137 @@
+urls)
+1. https://computingforgeeks.com/how-to-run-systemd-service-without-root-sudo/
+2. bus error: https://serverfault.com/questions/936985/cannot-use-systemctl-user-due-to-failed-to-get-d-bus-connection-permission/937012
+
+
+Systemd is a modern SysV-style init and rc replacement for Linux systems which makes use of many modern Linux kernel features.
+ It provides a system and service manager that runs as PID 1 and starts the rest of the system. 
+Systemd is what is responsible for controlling how services are started, stopped, restarted and otherwise managed on modern Linux distributions.
+
+
+The standard Systemd Service unit files that come with the Linux system or installed by third party applications usually run as root or system user account. 
+This guide will show you how you can run a Systemd Service without root as a standard user Logged into the system.
+
+Systemd Service unit
+
+A Systemd unit file contains configuration directives that describe the unit and define its behavior.
+ In this guide, we will write a systemd unit file that can be managed by logged in user without sudo.
+Run Systemd Service as standard Logged in user
+
+A user Systemd service should be placed in ~/.config/systemd/user/ directory if you want to have full ownership as normal user.
+Create it if it doesn’t exist.
+
+mkdir -p  ~/.config/systemd/user/
+
+We’ll create a test service which runs Syncthing application.
+
+curl -s https://api.github.com/repos/syncthing/syncthing/releases/latest | grep browser_download_url | grep linux-amd64 | cut -d '"' -f 4 | wget -qi -
+tar xvf syncthing-linux-amd64*.tar.gz
+sudo cp syncthing-linux-amd64-*/syncthing  /usr/local/bin/
+
+Let’s confirm our application binary is available.
+
+$ syncthing --version
+syncthing v1.4.0 "Fermium Flea" (go1.13.8 linux-amd64) teamcity@build.syncthing.net 2020-03-06 19:52:22 UTC
+
+
+Create a systemd service unit file under the directory.
+
+$ vim  ~/.config/systemd/user/syncthing.service
+[Unit]
+Description=Syncthing - Open Source Continuous File Synchronization
+Documentation=man:syncthing(1)
+
+[Service]
+ExecStart=/usr/local/bin/syncthing -no-browser -no-restart -logflags=0
+Restart=on-failure
+SuccessExitStatus=3 4
+RestartForceExitStatus=3 4
+
+# Hardening
+SystemCallArchitectures=native
+MemoryDenyWriteExecute=true
+NoNewPrivileges=true
+
+
+Reload systemd.
+
+
+$ systemctl --user daemon-reload
+
+If error  occurs: "some bla bla bus error something"
+
+[tester@nfserver user]$ id tester
+uid=1001(tester) gid=1001(tester) groups=1001(tester)
+
+#create 1001 user systemd with root user
+
+example)
+[root@nfserver systemd]# vi /etc/systemd/system/user@1001.service
+
+[root@nfserver systemd]# cat /etc/systemd/system/user@1001.service
+[Unit]
+Description=User Manager for UID %i
+After=systemd-user-sessions.service
+# These are present in the RHEL8 version of this file except that the unit is Requires, not Wants.
+# It's listed as Wants here so that if this file is used in a RHEL7 settings, it will not fail.
+# If a user upgrades from RHEL7 to RHEL8, this unit file will continue to work until it's
+# deleted the next time they upgrade Tableau Server itself.
+After=user-runtime-dir@%i.service
+Wants=user-runtime-dir@%i.service
+
+[Service]
+LimitNOFILE=infinity
+LimitNPROC=infinity
+User=%i
+PAMName=systemd-user
+Type=notify
+# PermissionsStartOnly is deprecated and will be removed in future versions of systemd
+# This is required for all systemd versions prior to version 231
+PermissionsStartOnly=true
+ExecStartPre=/bin/loginctl enable-linger %i
+ExecStart=-/lib/systemd/systemd --user
+Slice=user-%i.slice
+KillMode=mixed
+Delegate=yes
+TasksMax=infinity
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=default.target
+
+Confirm the service is available.
+
+$ systemctl --user list-unit-files syncthing.service
+UNIT FILE         STATE   
+syncthing.service disabled
+
+1 unit files listed.
+
+
+
+
+$ systemctl --user enable --now syncthing.service
+Created symlink /home/vagrant/.config/systemd/user/default.target.wants/syncthing.service → /home/vagrant/.config/systemd/user/syncthing.service.
+
+Let’s check the status of our service.
+
+
+$ systemctl --user status syncthing.service 
+● syncthing.service - Syncthing - Open Source Continuous File Synchronization
+   Loaded: loaded (/home/vagrant/.config/systemd/user/syncthing.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2020-04-03 17:18:54 UTC; 5s ago
+     Docs: man:syncthing(1)
+ Main PID: 22628 (syncthing)
+   CGroup: /user.slice/user-1000.slice/user@1000.service/syncthing.service
+           ├─22628 /usr/local/bin/syncthing -no-browser -no-restart -logflags=0
+           └─22632 /usr/local/bin/syncthing -no-browser -no-restart -logflags=0
+
+
+
+
+    –user – Connect to user service manager
+
+That’s the same process you’ll use to create any other Systemd service that you want to manage without privilege escalation or creating a different system user to run the service.
+
+More on Systemd:
