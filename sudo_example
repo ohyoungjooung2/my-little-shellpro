@@ -1,0 +1,15 @@
+#visudo example
+#Apache example
+appuser1 ALL=(root) NOPASSWD:/usr/bin/systemctl, /usr/sbin/httpd start stop restart
+#Nginx example
+appuser1 ALL=(root) NOPASSWD:/usr/bin/systemctl, /usr/sbin/nginx start stop restart
+#command example
+appuser1@oyjhome:~$ sudo -u root systemctl stop nginx
+appuser1@oyjhome:~$ netstat -tpln | grep 81
+(No info could be read for "-p": geteuid()=1001 but you should be root.)
+appuser1@oyjhome:~$ netstat -tln | grep 81
+appuser1@oyjhome:~$ sudo -u root systemctl start nginx
+appuser1@oyjhome:~$ netstat -tpln | grep 81
+(No info could be read for "-p": geteuid()=1001 but you should be root.)
+tcp        0      0 0.0.0.0:81              0.0.0.0:*               LISTEN      -                   
+tcp6       0      0 :::81                   :::*                    LISTEN 
