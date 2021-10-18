@@ -1,0 +1,2 @@
+zip -r gunicorn_setup_ntsnet_bird_predict.zip ntsnet_bird_predict -x "*/__pycache__/*" "*.pt" -e
+#With password set and execlude all __pycache__ directory
