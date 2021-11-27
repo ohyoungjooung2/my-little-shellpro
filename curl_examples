@@ -13,3 +13,6 @@ Optional[Customers [cid=2, cname=UpdatedKorean1, cemail=Updated@k.com]]oyj@contr
 
 oyj@controller:~/Desktop$ curl http://localhost:9990/customers/
 [{"cid":1,"cname":"KOREAN1","cemail":"TESTER1@K.CM"},{"cid":2,"cname":"UpdatedKorean1","cemail":"Updated@k.com"},{"cid":3,"cname":"KOREAN3","cemail":"TESTER3@K.CM"},{"cid":6,"cname":"Korean1","cemail":"t@k.com"}]
+
+#form/data put example
+curl -X PUT -H "Content-Type: multipart/form-data;"  -F "name"="tester" -F "phone"="11334343" -F "address"="USA texams" "http://localhost:8080/user/4"
